@@ -1,226 +1,72 @@
-
-
-
 const convertSelectB = document.querySelector(".currency-select-2")
-const currencyName = document.querySelector(".pp-moeda")
 const convertButton = document.querySelector(".button")
 const dolarValue = document.querySelector(".B-value")
+const realValue = document.querySelector(".A-value")
+const input = document.querySelector(".input-value")
 
+async function convertValue() {
+  try {
+    const response = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL")
+    const data = await response.json()
 
-function convertValue() {
+    const dolartoday = Number(data.USDBRL.high)
+    const eurotoday = Number(data.EURBRL.high)
+    const bitcointoday = Number(data.BTCBRL.high)
 
-  const inputValue = document.querySelector(".input-value").value
+    const libratoday = 6.14
 
+    const inputValue = Number(input.value)
 
-  const dolartoday = 5.25
-  const eurotoday = 5.73
-  const bitcointoday = 362.151
-  const libratoday = 6.73
-  const realtoday = 1.00
+    if (!inputValue) {
+      alert("Digite um valor válido")
+      return
+    }
 
-  if (convertSelectB.value == "Dolar") {
-    dolarValue.innerHTML = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "usd"
-    }).format(inputValue / dolartoday)
-  }
-
-
-  if (convertSelectB.value == "Euro") {
-    dolarValue.innerHTML = new Intl.NumberFormat("de-DE", {
-      style: "currency",
-      currency: "EUR"
-    }).format(inputValue / eurotoday)
-  }
-
-  if (convertSelectB.value == "Bitcoin") {
-    dolarValue.innerHTML = new Intl.NumberFormat("de-DE", {
-      style: "currency",
-      currency: "BTC"
-    }).format(inputValue / bitcointoday)
-  }
-
-  if (convertSelectB.value == "Libra") {
-    dolarValue.innerHTML = new Intl.NumberFormat("de-UK", {
-      style: "currency",
-      currency: "GBP"
-    }).format(inputValue / libratoday)
-  }
-
-  if (convertSelectB.value == "Real") {
-    dolarValue.innerHTML = new Intl.NumberFormat("pt-br", {
+    realValue.innerHTML = new Intl.NumberFormat("pt-BR", {
       style: "currency",
       currency: "BRL"
-    }).format(inputValue / realtoday)
+    }).format(inputValue)
+
+    let result = ""
+
+    if (convertSelectB.value === "Dolar") {
+      result = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD"
+      }).format(inputValue / dolartoday)
+    }
+
+    if (convertSelectB.value === "Euro") {
+      result = new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "EUR"
+      }).format(inputValue / eurotoday)
+    }
+
+    if (convertSelectB.value === "Bitcoin") {
+      result = `${(inputValue / bitcointoday).toFixed(6)} BTC`
+    }
+
+    if (convertSelectB.value === "Libra") {
+      result = new Intl.NumberFormat("en-GB", {
+        style: "currency",
+        currency: "GBP"
+      }).format(inputValue / libratoday)
+    }
+
+    if (convertSelectB.value === "Real") {
+      result = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      }).format(inputValue)
+    }
+
+    dolarValue.innerHTML = result
+
+  } catch (error) {
+    console.error(error)
+    alert("Erro ao buscar cotação")
   }
 }
-
-
-function convertCurrency() {
-
-
-
-  const newImg = document.querySelector(".currency-imgim")
-
-
-
-  if (convertSelectB.value == "Dolar") {
-    currencyName.innerHTML = "Dolar"
-    newImg.src = "./assets/EUA.png"
-  }
-
-
-  if (convertSelectB.value == "Euro") {
-    currencyName.innerHTML = "Euro"
-    newImg.src = "./assets/Euro.png"
-  }
-
-
-  if (convertSelectB.value == "Bitcoin") {
-    currencyName.innerHTML = "Bitcoin"
-    newImg.src = "./assets/bitcoin.png"
-  }
-
-
-  if (convertSelectB.value == "Libra") {
-    currencyName.innerHTML = "Libra"
-    newImg.src = "./assets/libra.png"
-  }
-
-
-  if (convertSelectB.value == "Real") {
-    currencyName.innerHTML = "Real"
-    newImg.src = "./assets/Brasil.png"
-  }
-
-  convertValue()
-}
-
-
-
-
-/* próxima etapa do projeto*/
-
-
-
-
-
-const currencyNameA = document.querySelector(".p-moeda")
-const RealValue = document.querySelector(".A-value")
-const convertSelectA = document.querySelector(".currency-select-1")
-
-
-
-function convertValueB() {
-
-
-  const inputValue = document.querySelector(".input-value").value
-
-
-  const dolartoday = 5.25
-  const eurotoday = 5.73
-  const bitcointoday = 362.151
-  const libratoday = 6.73
-  const realtoday = 1.00
-
-
-
-  if (convertSelectA.value == "Dolar") {
-    RealValue.innerHTML = new Intl.NumberFormat("en-us", {
-      style: "currency",
-      currency: "usd"
-    }).format(inputValue / dolartoday)
-  }
-
-
-  if (convertSelectA.value == "Euro") {
-    RealValue.innerHTML = new Intl.NumberFormat("de-DE", {
-      style: "currency",
-      currency: "EUR"
-    }).format(inputValue / eurotoday)
-  }
-
-
-  if (convertSelectA.value == "Bitcoin") {
-    RealValue.innerHTML = new Intl.NumberFormat("de-DE", {
-      style: "currency",
-      currency: "BTC"
-    }).format(inputValue / bitcointoday)
-  }
-
-
-  if (convertSelectA.value == "Libra") {
-    RealValue.innerHTML = new Intl.NumberFormat("de-UK", {
-      style: "currency",
-      currency: "GBP"
-    }).format(inputValue / libratoday)
-  }
-
-
-  if (convertSelectA.value == "Real") {
-    RealValue.innerHTML = new Intl.NumberFormat("pt-br", {
-      style: "currency",
-      currency: "BRL"
-    }).format(inputValue / realtoday)
-  }
-
-}
-
-function convertCurrencyA() {
-
-  const newImgA = document.querySelector(".currency-imgim-brasil")
-
-  if (convertSelectA.value == "Dolar") {
-    currencyNameA.innerHTML = "Dolar"
-    newImgA.src = "./assets/EUA.png"
-
-  }
-
-  if (convertSelectA.value == "Euro") {
-    currencyNameA.innerHTML = "Euro"
-    newImgA.src = "./assets/Euro.png"
-
-  }
-
-
-  if (convertSelectA.value == "Bitcoin") {
-    currencyNameA.innerHTML = "Bitcoin"
-    newImgA.src = "./assets/bitcoin.png"
-
-  }
-
-  if (convertSelectA.value == "Libra") {
-    currencyNameA.innerHTML = "Libra"
-    newImgA.src = "./assets/libra.png"
-  }
-
-
-
-
-  if (convertSelectA.value == "Real") {
-    currencyNameA.innerHTML = "Real"
-    newImgA.src = "./assets/Brasil.png"
-  }
-
-
-  convertValueB()
-}
-
-
 
 convertButton.addEventListener("click", convertValue)
-convertSelectB.addEventListener("change", convertCurrency)
-
-convertButton.addEventListener("click", convertValueB)
-convertSelectA.addEventListener("change", convertCurrencyA)
-
-
-
-
-
-
-
-
-
-
-
