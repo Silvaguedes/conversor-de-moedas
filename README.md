@@ -14,10 +14,10 @@ A aplicação utiliza dados atualizados de uma API externa, garantindo maior pre
 
 🚀 Funcionalidades
 💰 Conversão de valores em Real (BRL) para:
-Dólar (USD)
-Euro (EUR)
-Bitcoin (BTC)
-Libra (GBP)
+Dólar (USD),
+Euro (EUR),
+Bitcoin (BTC),
+Libra (GBP),
 Real (BRL)
 🌐 Consumo de API para cotações atualizadas
 🔢 Entrada de valores personalizada
